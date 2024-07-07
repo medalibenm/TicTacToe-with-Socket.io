@@ -6,6 +6,7 @@ const connectToDB = require("./database/main")
 const characterRouter = require("./routes/character")
 dotenv.config()
 
+
 app.use(express.json())
 app.use(cors())
 
