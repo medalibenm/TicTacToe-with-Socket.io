@@ -3,7 +3,10 @@ const router = express.Router()
 const CharacterModel = require("../database/models/character")
 
 router.get("/",async function(req,res){
-    const data = await CharacterModel.find({})
+    const page = req.query.p || 0
+    const bookperPage = 3
+
+    const data = await CharacterModel.find().skip(page * bookperPage).limit(3)
     res.json(data)
 })
 

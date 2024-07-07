@@ -1,10 +1,17 @@
 const listDiv = document.getElementById('list');
 const form = document.getElementById('form');
+var p = 0
+var pre = document.getElementById('pre');
+var next = document.getElementById('next');
+var nbElement = 0
 
-document.addEventListener('DOMContentLoaded', () => {
-    axios.get('http://localhost:3000/characters')
+
+function fetchC(page) {
+    axios.get(`http://localhost:3000/characters?p=${p}`)
         .then(response => {
             const characters = response.data;
+            nbElement = characters.length
+            listDiv.innerHTML=''
             characters.forEach(character => {
                 const id = character['_id']
                 const name = character['name'];
@@ -15,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>Level: ${level}</p>
                     <button type="button" class="update-btn">UPDATE</button>
                     <button type="button" class="delete-btn">DELETE</button>
+                    <button type="button" class="delete-btn">PLAY</button>
                 `;
                 listDiv.appendChild(characterElement);
 
@@ -41,26 +49,53 @@ deleteBtn.addEventListener('click', () => {
                             characterElement.remove()
                         })
 
-                        
+                               
 });
             });
+
             
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
+
+}
+
+
+next.addEventListener('click', () => {
+    if (nbElement != 0) {
+        p = p+ 1;
+    fetchC(p);
+    console.log(p)
+    }
 });
+
+pre.addEventListener('click', () => {
+    if (p > 0) {
+        p =p-1;
+        console.log(p)
+        fetchC(p);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchC(p);
+    });
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     
     const name = document.getElementById('name').value;
-    const level = document.getElementById('level').value;
+    var level = document.getElementById('level').value;
+    level = parseInt(level,10)
     
+
     if (!name || !level) {
         alert('Name and level are required');
         return;
     }
+
+
 
     axios.post('http://localhost:3000/characters', { name, level })
         .then(response => {
