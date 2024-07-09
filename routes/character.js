@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const CharacterModel = require("../database/models/character")
+const validateCharacter = require('./validator');
 
 router.get("/",async function(req,res){
     const page = req.query.p || 0
@@ -10,7 +11,7 @@ router.get("/",async function(req,res){
     res.json(data)
 })
 
-router.post("/", async function(req,res){
+router.post("/", validateCharacter, async function(req,res){
     const name = req.body.name
     const level = req.body.level
 
@@ -25,7 +26,7 @@ router.post("/", async function(req,res){
     res.json(`${name} created  succesfully`)
 })
 
-router.put("/:id", async function(req,res){
+router.put("/:id", validateCharacter, async function(req,res){
     const id = req.params.id
     const name = req.body.name
     const level = req.body.level
