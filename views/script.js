@@ -22,7 +22,7 @@ function fetchC(page) {
                     <p>Level: ${level}</p>
                     <button type="button" class="update-btn">UPDATE</button>
                     <button type="button" class="delete-btn">DELETE</button>
-                    <button type="button" class="delete-btn">PLAY</button>
+                    <button type="button" onclick="window.location.href='./xo.html'">PLAY</button>
                 `;
                 listDiv.appendChild(characterElement);
 

@@ -33,7 +33,6 @@ router.put("/:id", async function(req,res){
     try {
         const updatedCharacter = await CharacterModel.findByIdAndUpdate(id,{name,level})
 
-         // TO DO : dir condition t3  id not found
       
           res.json(updatedCharacter);
     } catch(e) {
@@ -47,7 +46,6 @@ router.delete("/:id",async function(req,res){
     try {
         await CharacterModel.findByIdAndDelete(id)
 
-      // TO DO : dir condition t3  id not found
 
           res.json("character deleted");
     } catch(e) {
